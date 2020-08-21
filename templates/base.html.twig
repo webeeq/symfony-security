@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        <link rel="stylesheet" href="{{ url('app_main') }}css/bootstrap.min.css" />
+        <link rel="stylesheet" href="{{ url('app_main') }}css/style.css" />
+        {% block stylesheets %}{% endblock %}
+    </head>
+    <body>
+        <nav>
+            {% if is_granted('ROLE_ADMIN') %}
+                <a class="nav-link" href="{{ path('app_settings') }}">Settings</a>
+                <a class="nav-link" href="{{ path('app_admin') }}">Admin</a>
+            {% endif %}
+            {% if is_granted('ROLE_USER') %}
+                <a class="nav-link" href="{{ path('app_profile') }}">Profile</a>
+            {% endif %}
+            {% if app.user %}
+                <a class="nav-link" href="{{ path('app_logout') }}">Logout</a>
+            {% else %}
+                <a class="nav-link" href="{{ path('app_login') }}">Login</a>
+            {% endif %}
+        </nav>
+        {% block body %}{% endblock %}
+        {% block javascripts %}{% endblock %}
+    </body>
+</html>
